@@ -1,0 +1,26 @@
+{
+ "token": "AERO",
+ "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+ "chain": "Base (8453)",
+ "project": "tokens/aero",
+ "namespace": "AeroVerify",
+ "config": "config/aero.json",
+ "date": "2026-11-17",
+ "bytecode": {
+  "block": 58638827,
+  "bytes": 4736,
+  "source": "data/SOURCE.md"
+ },
+ "port": "Ported from tokens/usde (same solc 0.8.19 / paris / OpenZeppelin ERC20Permit + minter). Changes: storage slots (balances 0, allowances 1, totalSupply 2, nonces 7, minter 9), no Ownable2Step (owner/pendingOwner/transferOwnership/acceptOwnership/renounceOwnership removed), no burn/burnFrom, setMinter gated by the minter (not an owner) and emits no event, mint returns true, chain id 8453 and the AERO address in the cached domain branch, a new real permit signature (private key 0x11..11) for the AERO domain.",
+ "build": {
+  "status": "pending: first CI build on GitHub Actions (.github/workflows/lean-build.yml)"
+ },
+ "assumptions": [
+  "KeyFacts (Instance.lean): 5 named keccak facts",
+  "fork range Paris <= fork < Glamsterdam (Ethereum fork model; Base is OP-stack: identical opcode semantics for this bytecode, but the fork mapping is an assumption)"
+ ],
+ "not_covered": [
+  "who holds the minter role today (read on chain 2026-11-17: 0xeb018363f0a9af8f91f06fee6613a751b2a33fe5, a contract)",
+  "constructor"
+ ]
+}
