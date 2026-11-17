@@ -408,7 +408,7 @@ theorem ok_permit_real (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
       within = .ok s)
     (hok : s.error = none) :
     isZero message.value ≠ 0 ∧
-    isZero (signedLessThan (sub (BitVec.ofNat 256 message.data.size) (2 : U256)) (224 : U256))
+    isZero (signedLessThan (sub (BitVec.ofNat 256 message.data.size) (4 : U256)) (224 : U256))
       ≠ 0 ∧
     equal (loadWord message.data 4 32) (bitwiseAnd (loadWord message.data 4 32)
       (1461501637330902918203684832716283019655932542975 : U256)) ≠ 0 ∧
