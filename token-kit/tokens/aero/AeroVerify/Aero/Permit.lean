@@ -10,8 +10,8 @@ import TokenKit.Evm.ReadableOpt
 ERC20Permit 4.9) checks the deadline, reads and increments `_nonces[owner]`, builds an EIP-712
 digest in memory, checks that `s` is in the lower half of the curve order, calls the precompile
 at address 1 (ECRECOVER) with STATICCALL, and compares the address it gets with `owner`. The
-generated paths stop at the frame before `GAS STATICCALL` (pc 6035, `Paths.ok_permit`) and start
-again after it (pc 6037, `Paths.ok_permitTailC` and `Paths.ok_permitTailR`). This file joins the
+generated paths stop at the frame before `GAS STATICCALL` (pc 3598, `Paths.ok_permit`) and start
+again after it (pc 3600, `Paths.ok_permitTailC` and `Paths.ok_permitTailR`). This file joins the
 two across the call, for `processRunner`, with no assumption on what the precompile returns: the
 output is EthLib's own `Precompiles.Ecrecover.compute` (through `TokenKit.recoveredWord`).
 
@@ -26,7 +26,7 @@ address, other chain; other address). `domainSep` is that word; both branches ar
   before the call, by branch.
 - `digest_bytes_at`: the 66 bytes that the code hashes are `0x19 0x01`, the domain separator and
   the struct hash.
-- `permit_callC`, `permit_callR`: from the frame at pc 6035 with a memory that holds the four
+- `permit_callC`, `permit_callR`: from the frame at pc 3598 with a memory that holds the four
   input words (the two memory layouts: cached and rebuilt separator), a run of the real runner
   that ends with no error made the call with at least 3000 gas and ended as
   `Paths.permitTailC_ends` says, with the recovered word `recoveredWord (permitInput ...)`.
@@ -163,28 +163,28 @@ variable {fork : Fork} {message : Message fork} {state : State.TransactionState}
 hash of the name, the hash of the version, the chain id and the address of the contract. -/
 def domainRebuilt (m : Message fork) : U256 :=
   keccak (memW [(63076024560530113402979550242307453568063438748328787417531900361828837441551 : U256),
-    (800430381884319963266448255313171563733839282559604318839735355180845479980 : U256),
+    (97921745707130838832220785337705394426636289772679114338412459218146823057472 : U256),
     (90743482286830539503240959006302832933333810038750515972785732718729991261126 : U256),
     BitVec.ofNat 256 m.blockEnv.chainId.toNat, m.currentTarget.toU256])
 
 /-- The domain separator of a call: the cached constant when the contract is at the deployed
-address and the chain id is 1, else the rebuilt hash. -/
+address and the chain id is 8453 (Base), else the rebuilt hash. -/
 def domainSep (m : Message fork) : U256 :=
   if AERO_ADDRESS = m.currentTarget.toU256 ∧
-      BitVec.ofNat 256 m.blockEnv.chainId.toNat = (1 : U256) then CACHED_DOMAIN
+      BitVec.ofNat 256 m.blockEnv.chainId.toNat = (8453 : U256) then CACHED_DOMAIN
   else domainRebuilt m
 
 /-- The fixed part of the gas of `permit` before the call of ECRECOVER, by branch of the domain
 separator. -/
 def permitBase (m : Message fork) : Nat :=
   if AERO_ADDRESS = m.currentTarget.toU256 then
-    if BitVec.ofNat 256 m.blockEnv.chainId.toNat = (1 : U256) then 1592 else 1845
-  else 1835
+    if BitVec.ofNat 256 m.blockEnv.chainId.toNat = (8453 : U256) then 1635 else 1888
+  else 1878
 
 /-- The slot of `_nonces[owner]` of a `permit` message. -/
 abbrev nonceSlot (m : Message fork) : U256 :=
   mapSlot (bitwiseAnd (loadWord m.data 4 32)
-    (1461501637330902918203684832716283019655932542975 : U256)) (9 : U256)
+    (1461501637330902918203684832716283019655932542975 : U256)) (7 : U256)
 
 /-- The state at the call of ECRECOVER: the nonce of the owner is already incremented. -/
 abbrev permitS1 (m : Message fork) (S : State.TransactionState) : State.TransactionState :=
@@ -234,7 +234,7 @@ abbrev permitCall (fork : Fork) (substate : Substate) (gas : Nat) :=
       routeCost fork (substate.accessedAddresses.insert (toAddressMasked 1)) none)
 
 /-- From Paris and before Glamsterdam, under the real runner: a run from the frame of `permit`
-before `GAS STATICCALL` (pc 6035), in the branch of the cached domain separator (a memory of
+before `GAS STATICCALL` (pc 3598), in the branch of the cached domain separator (a memory of
 512 bytes that holds the digest, `v`, `r` and `s` at 384 and 0 at the output word 352), that
 ends with no error.
 
@@ -253,10 +253,10 @@ theorem permit_callC (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     (hdel : ∀ c, state.getCode (state.getAccount (toAddressMasked 1)).codeHash = .ok c →
       .pectra ≤ fork → delegatedAddress c = none)
     {bound : Nat} {z s : Evm fork Nat}
-    (start : At CODE message 6035 [(1 : U256), (384 : U256), (128 : U256), (352 : U256),
+    (start : At CODE message 3598 [(1 : U256), (384 : U256), (128 : U256), (352 : U256),
       (32 : U256), (512 : U256), (1 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg,
-      (5711 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg, (2433 : U256),
-      (0 : U256), dg, sh, sS, sR, sV, deadline, value, spender, owner, (656 : U256), sel]
+      (3401 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg, (1561 : U256),
+      (0 : U256), dg, sh, sS, sR, sV, deadline, value, spender, owner, (641 : U256), sel]
       M gas state substate z)
     (within : GasMeter.gasHeld z.gas ≤ bound)
     (hrun : Evm.runFrame (step fork) (step_decreases fork) bound (processRunner fork bound) z
@@ -278,7 +278,7 @@ theorem permit_callC (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
   have t32 : (32 : U256).toNat = 32 := by decide
   have hE : extendMemory M.size [((384 : U256), (128 : U256)), ((352 : U256), (32 : U256))] =
       ⟨0, 0⟩ := extendMemory_two (by rw [hsz]; decide) (by rw [hsz]; decide)
-  obtain ⟨hg, after, hat, w, hr⟩ := ecrecover_call_ok hparis hglam (q := 6037) rfl
+  obtain ⟨hg, after, hat, w, hr⟩ := ecrecover_call_ok hparis hglam (q := 3600) rfl
     (by code_fact) (by code_fact) (by code_fact) (by code_fact) (by code_fact)
     (by code_fact) (by code_fact) (by code_fact) (by code_fact)
     (by code_fact) (by code_fact) (by code_fact) (by code_fact)
@@ -310,10 +310,10 @@ theorem permit_callR (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     (hdel : ∀ c, state.getCode (state.getAccount (toAddressMasked 1)).codeHash = .ok c →
       .pectra ≤ fork → delegatedAddress c = none)
     {bound : Nat} {z s : Evm fork Nat}
-    (start : At CODE message 6035 [(1 : U256), (576 : U256), (128 : U256), (544 : U256),
+    (start : At CODE message 3598 [(1 : U256), (576 : U256), (128 : U256), (544 : U256),
       (32 : U256), (704 : U256), (1 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg,
-      (5711 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg, (2433 : U256),
-      (0 : U256), dg, sh, sS, sR, sV, deadline, value, spender, owner, (656 : U256), sel]
+      (3401 : U256), (0 : U256), (0 : U256), (0 : U256), sS, sR, sV, dg, (1561 : U256),
+      (0 : U256), dg, sh, sS, sR, sV, deadline, value, spender, owner, (641 : U256), sel]
       M gas state substate z)
     (within : GasMeter.gasHeld z.gas ≤ bound)
     (hrun : Evm.runFrame (step fork) (step_decreases fork) bound (processRunner fork bound) z
@@ -335,7 +335,7 @@ theorem permit_callR (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
   have t32 : (32 : U256).toNat = 32 := by decide
   have hE : extendMemory M.size [((576 : U256), (128 : U256)), ((544 : U256), (32 : U256))] =
       ⟨0, 0⟩ := extendMemory_two (by rw [hsz]; decide) (by rw [hsz]; decide)
-  obtain ⟨hg, after, hat, w, hr⟩ := ecrecover_call_ok hparis hglam (q := 6037) rfl
+  obtain ⟨hg, after, hat, w, hr⟩ := ecrecover_call_ok hparis hglam (q := 3600) rfl
     (by code_fact) (by code_fact) (by code_fact) (by code_fact) (by code_fact)
     (by code_fact) (by code_fact) (by code_fact) (by code_fact)
     (by code_fact) (by code_fact) (by code_fact) (by code_fact)
@@ -440,7 +440,7 @@ theorem ok_permit_real (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     have hD : domainSep message = CACHED_DOMAIN := by
       unfold domainSep
       exact if_pos ⟨e7, e8⟩
-    have hB : permitBase message = 1592 := by
+    have hB : permitBase message = 1635 := by
       unfold permitBase
       rw [if_pos e7, if_pos e8]
     obtain ⟨msz, m64, -, -, -, -, -, -, -, -, -, -, m352, m384, m416, m448, m480⟩ :=
@@ -454,7 +454,7 @@ theorem ok_permit_real (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     have hD : domainSep message = domainRebuilt message := by
       unfold domainSep
       exact if_neg (fun h => n8 h.2)
-    have hB : permitBase message = 1845 := by
+    have hB : permitBase message = 1888 := by
       unfold permitBase
       rw [if_pos e7, if_neg n8]
     obtain ⟨msz, m64, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, m544, m576, m608, m640,
@@ -467,7 +467,7 @@ theorem ok_permit_real (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     have hD : domainSep message = domainRebuilt message := by
       unfold domainSep
       exact if_neg (fun h => n7 h.1)
-    have hB : permitBase message = 1835 := by
+    have hB : permitBase message = 1878 := by
       unfold permitBase
       rw [if_neg n7]
     obtain ⟨msz, m64, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, m544, m576, m608, m640,

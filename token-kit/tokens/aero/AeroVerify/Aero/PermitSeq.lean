@@ -74,7 +74,7 @@ theorem permitDone_facts {gas c : Nat} {s : Evm fork Nat} {D : U256}
     hasAccount (permitS2 message state) message.currentTarget ∧
     s.output = ByteArray.empty ∧
     s.state = writeSlot (permitS2 message state) message.currentTarget
-      (mapSlot (permitSpender message) (mapSlot (permitOwner message) (3 : U256)))
+      (mapSlot (permitSpender message) (mapSlot (permitOwner message) (1 : U256)))
       (loadWord message.data 68 32) ∧
     s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget (63486140976153616755203102783360879283472101686154884697241723088393386309925 : U256)
       (permitOwner message) (permitSpender message) (wordBytes (loadWord message.data 68 32))) := by
@@ -111,19 +111,19 @@ theorem supply_permit (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
   have hm3 : permitSpender message ∈ callKeys message :=
     List.mem_cons_of_mem _ (List.mem_cons_of_mem _ List.mem_cons_self)
   have hacc1 := hasAccount_readSlot (other := message.currentTarget)
-    (n := mapSlot (permitOwner message) (9 : U256)) hacc0
+    (n := mapSlot (permitOwner message) (7 : U256)) hacc0
   have hA : Inv message.currentTarget (writeSlot
-      (readSlot state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
-      message.currentTarget (mapSlot (permitOwner message) (9 : U256))
-      (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
+      (readSlot state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
+      message.currentTarget (mapSlot (permitOwner message) (7 : U256))
+      (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
         (1 : U256))) := by
     unfold Inv Supply.Inv at hinv ⊢
     rw [D_nonce hsep hm2 hacc1, Supply.D_read]
     exact hinv
   have hS1 : permitS1 message state = writeSlot
-      (readSlot state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
-      message.currentTarget (mapSlot (permitOwner message) (9 : U256))
-      (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
+      (readSlot state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
+      message.currentTarget (mapSlot (permitOwner message) (7 : U256))
+      (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
         (1 : U256)) := by
     simp only [permitS1, nonceSlot, and_mask_comm]
   have hB : Inv message.currentTarget (permitS2 message state) :=
@@ -319,14 +319,14 @@ theorem permit_readable (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
       bitwiseAnd (1461501637330902918203684832716283019655932542975 : U256) (permitRec message state (domainSep message)) ≠ 0 ∧
       bitwiseAnd (1461501637330902918203684832716283019655932542975 : U256) (permitRec message state (domainSep message)) = permitOwner message) ∧
     (s.output = ByteArray.empty ∧
-      storageAt s.state message.currentTarget (mapSlot (permitOwner message) (9 : U256)) =
+      storageAt s.state message.currentTarget (mapSlot (permitOwner message) (7 : U256)) =
         add (storageAt state message.currentTarget
-          (mapSlot (permitOwner message) (9 : U256))) (1 : U256) ∧
+          (mapSlot (permitOwner message) (7 : U256))) (1 : U256) ∧
       storageAt s.state message.currentTarget
-        (mapSlot (permitSpender message) (mapSlot (permitOwner message) (3 : U256))) =
+        (mapSlot (permitSpender message) (mapSlot (permitOwner message) (1 : U256))) =
           loadWord message.data 68 32 ∧
-      (∀ k, k ≠ mapSlot (permitOwner message) (9 : U256) →
-        k ≠ mapSlot (permitSpender message) (mapSlot (permitOwner message) (3 : U256)) →
+      (∀ k, k ≠ mapSlot (permitOwner message) (7 : U256) →
+        k ≠ mapSlot (permitSpender message) (mapSlot (permitOwner message) (1 : U256)) →
         storageAt s.state message.currentTarget k = storageAt state message.currentTarget k) ∧
       s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget (63486140976153616755203102783360879283472101686154884697241723088393386309925 : U256)
         (permitOwner message) (permitSpender message)
@@ -341,16 +341,16 @@ theorem permit_readable (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     List.mem_cons_of_mem _ List.mem_cons_self
   have hm3 : permitSpender message ∈ callKeys message :=
     List.mem_cons_of_mem _ (List.mem_cons_of_mem _ List.mem_cons_self)
-  have hne : mapSlot (permitOwner message) (9 : U256) ≠
-      mapSlot (permitSpender message) (mapSlot (permitOwner message) (3 : U256)) :=
+  have hne : mapSlot (permitOwner message) (7 : U256) ≠
+      mapSlot (permitSpender message) (mapSlot (permitOwner message) (1 : U256)) :=
     fun e => (hsep.nonce _ hm2).2.2 _ hm2 _ hm3 e.symm
   have hacc1 := hasAccount_readSlot (other := message.currentTarget)
-    (n := mapSlot (permitOwner message) (9 : U256)) hacc0
+    (n := mapSlot (permitOwner message) (7 : U256)) hacc0
   have hS1 : ∀ k, storageAt (permitS2 message state) message.currentTarget k =
       storageAt (writeSlot
-        (readSlot state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
-        message.currentTarget (mapSlot (permitOwner message) (9 : U256))
-        (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (9 : U256)))
+        (readSlot state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
+        message.currentTarget (mapSlot (permitOwner message) (7 : U256))
+        (add (storageAt state message.currentTarget (mapSlot (permitOwner message) (7 : U256)))
           (1 : U256))) message.currentTarget k := by
     intro k
     rw [storageAt_permitS2]

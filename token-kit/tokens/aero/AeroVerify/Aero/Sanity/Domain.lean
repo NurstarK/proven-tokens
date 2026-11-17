@@ -65,7 +65,7 @@ theorem domainSeparator_cached_runs (hfork : .berlin ≤ fork) (b : BlockEnviron
       At CODE (m_domainSeparator (onChain b 8453) t AERO) 0 [] .empty gas (sState AERO []) ss evm ∧
       (∀ {bound : Nat} (runChild : MessageRunner fork Nat bound),
         GasMeter.gasHeld evm.gas ≤ bound → EndsL runChild evm s) ∧ s.error = none ∧
-      s.output = (wordBytes (52913264502934295635151425816809534945870579946550263777912616301551047572659 : U256)) ∧
+      s.output = (wordBytes (60268727638574063375328373445388817356799950801231552697439065119743798420099 : U256)) ∧
       s.state = sState AERO [] := by
   have hsz : (m_domainSeparator (onChain b 8453) t AERO).data.size = 4 := size_SEL_domainSeparator
   have hsl : selector (m_domainSeparator (onChain b 8453) t AERO).data = selector SEL_domainSeparator := rfl

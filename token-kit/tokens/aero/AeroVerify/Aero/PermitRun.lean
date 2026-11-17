@@ -389,7 +389,7 @@ theorem permit_runs (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
   have t352 : (352 : U256).toNat = 352 := by decide
   have t32 : (32 : U256).toNat = 32 := by decide
   -- the call
-  obtain ⟨a, hga, hat, w2, e2⟩ := ecrecover_call_runs hparis' hglam (pc := 6035)
+  obtain ⟨a, hga, hat, w2, e2⟩ := ecrecover_call_runs hparis' hglam (pc := 3598)
     (by code_fact) (by code_fact) (by code_fact) (by simp [STACK_LIMIT])
     (by rw [msz]; decide) (by rw [msz]; decide)
     (by rw [getAccount_writeSlot]; exact codeHash_sState AERO [] _)
@@ -410,10 +410,10 @@ theorem permit_runs (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
     rw [h]; decide
   have hfit := hfit' msz
   have hS1 : hasAccount (writeSlot (readSlot (sState AERO []) AERO (mapSlot (bitwiseAnd K
-      (1461501637330902918203684832716283019655932542975 : U256)) (9 : U256))) AERO
+      (1461501637330902918203684832716283019655932542975 : U256)) (7 : U256))) AERO
       (mapSlot (bitwiseAnd K (1461501637330902918203684832716283019655932542975 : U256))
-        (9 : U256)) (add (storageAt (sState AERO []) AERO (mapSlot (bitwiseAnd K
-          (1461501637330902918203684832716283019655932542975 : U256)) (9 : U256))) (1 : U256)))
+        (7 : U256)) (add (storageAt (sState AERO []) AERO (mapSlot (bitwiseAnd K
+          (1461501637330902918203684832716283019655932542975 : U256)) (7 : U256))) (1 : U256)))
       AERO := hasAccount_writeSlot (hasAccount_readSlot hacc)
   -- the code after the call
   obtain ⟨s, hs, hH⟩ := SpecG.runFrame (Paths.permitTailC_p5 (fork := fork) hberlin
