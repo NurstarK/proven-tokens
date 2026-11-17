@@ -1,0 +1,77 @@
+name: lean-build
+# Builds usdt-verify (EthLib + Mathlib from the prebuilt cache), the token kit, and every token
+# listed in .github/ci-tokens.txt, then runs the axioms check on each build log.
+on:
+  push:
+    branches: [base-tokens]
+    paths: ["token-kit/**", ".github/**"]
+  workflow_dispatch:
+    inputs:
+      tokens: { description: "space-separated tokens (default: .github/ci-tokens.txt)", required: false }
+
+env:
+  USDT_VERIFY_SHA: d0e684c5f20461b5816fa0a806e3888500535a51
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Free disk
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h / | tail -1
+
+      - uses: actions/checkout@v4
+        with: { path: repo }
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Restore usdt-verify build
+        id: uv-cache
+        uses: actions/cache@v4
+        with:
+          path: usdt-verify
+          key: usdt-verify-${{ env.USDT_VERIFY_SHA }}-v1
+
+      - name: Build usdt-verify (EthLib + Mathlib cache)
+        if: steps.uv-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --quiet https://github.com/Giulio2002/usdt-verify
+          cd usdt-verify && git checkout --quiet "$USDT_VERIFY_SHA"
+          lake exe cache get 2>&1 | tail -3
+          lake build 2>&1 | grep -v '^✔' | tail -50
+
+      - name: Lay out kit next to usdt-verify
+        run: |
+          cp -r repo/token-kit token-kit
+          T="${{ github.event.inputs.tokens }}"; [ -n "$T" ] || T="$(cat repo/.github/ci-tokens.txt)"
+          echo "TOKENS=$T" >> "$GITHUB_ENV"; mkdir -p logs
+
+      - name: Build kit
+        run: |
+          cd token-kit && lake build > ../logs/kit.log 2>&1; rc=$?
+          tail -3 ../logs/kit.log; grep -n '^error' ../logs/kit.log | head -30; exit $rc
+
+      - name: Build tokens + axioms check
+        run: |
+          fail=0
+          for t in $TOKENS; do
+            echo "::group::$t"
+            [ "$t" = uni ] && export LEAN_NUM_THREADS=2
+            ( cd token-kit/tokens/$t && lake build > ../../../logs/$t.log 2>&1 ); rc=$?
+            echo "EXIT=$rc" >> logs/$t.log; tail -3 logs/$t.log; grep -n '^error' logs/$t.log | head -40
+            R=$(ls -d token-kit/tokens/$t/*Verify | head -1)
+            bash token-kit/scripts/check_axioms.sh logs/$t.log $R/Test/Axioms.lean > logs/$t.axioms 2>&1; ax=$?
+            grep -v '^ ' logs/$t.axioms | tail -5
+            echo "::endgroup::"
+            [ $rc = 0 ] && [ $ax = 0 ] && echo "PASS $t" >> logs/summary.txt || { echo "FAIL $t (build=$rc axioms=$ax)" >> logs/summary.txt; fail=1; }
+          done
+          cat logs/summary.txt; cat logs/summary.txt >> "$GITHUB_STEP_SUMMARY"; exit $fail
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: lean-logs, path: logs/ }

@@ -1,0 +1,681 @@
+[
+ {
+  "id": "usd-coin",
+  "sym": "USDC",
+  "fdv": 69159537083,
+  "addr": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+  "code": {
+   "bytes": 1852,
+   "ops": 747,
+   "selectors": 5,
+   "permit": false,
+   "counts": {
+    "JUMPI": 27,
+    "JUMP": 38,
+    "JUMPDEST": 58,
+    "ECADD?": 27,
+    "CALL": 1,
+    "SLOAD": 2,
+    "DELEGATECALL": 1,
+    "SSTORE": 2,
+    "KECCAK": 4
+   }
+  },
+  "src": {
+   "name": "FiatTokenProxy",
+   "compiler": "0.6.12+commit.27d51765",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "upgradeTo",
+    "upgradeToAndCall"
+   ],
+   "writes": [
+    "changeAdmin",
+    "upgradeTo",
+    "upgradeToAndCall"
+   ]
+  },
+  "impl_addr": "0x2ce6311ddae708829bc0784c967b7d77d19fd779",
+  "impl_src": {
+   "name": "FiatTokenV2_2",
+   "compiler": "0.6.12+commit.27d51765",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "blacklist",
+    "burn",
+    "configureMinter",
+    "mint",
+    "pause",
+    "removeMinter",
+    "rescueERC20",
+    "transferOwnership",
+    "unBlacklist",
+    "unpause",
+    "updateBlacklister",
+    "updateMasterMinter",
+    "updatePauser",
+    "updateRescuer"
+   ],
+   "writes": [
+    "approve",
+    "blacklist",
+    "burn",
+    "cancelAuthorization",
+    "configureMinter",
+    "decreaseAllowance",
+    "increaseAllowance",
+    "initialize",
+    "initializeV2",
+    "initializeV2_1",
+    "initializeV2_2",
+    "mint",
+    "pause",
+    "permit",
+    "receiveWithAuthorization",
+    "removeMinter",
+    "rescueERC20",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "transferWithAuthorization",
+    "unBlacklist",
+    "unpause",
+    "updateBlacklister",
+    "updateMasterMinter",
+    "updatePauser",
+    "updateRescuer"
+   ]
+  },
+  "impl_code": {
+   "bytes": 23464,
+   "ops": 10665,
+   "selectors": 55,
+   "permit": true,
+   "counts": {
+    "JUMPI": 269,
+    "JUMPDEST": 442,
+    "JUMP": 251,
+    "ECADD?": 689,
+    "SLOAD": 95,
+    "KECCAK": 77,
+    "SSTORE": 39,
+    "DELEGATECALL": 2,
+    "CALL": 1
+   }
+  },
+  "proxy_admin": null,
+  "owner_now": "0x3abd6f64a422225e61e435bae41db12096106df7",
+  "total_supply_raw": 4296775988303410
+ },
+ {
+  "id": "coinbase-wrapped-btc",
+  "sym": "CBBTC",
+  "fdv": 6867681883,
+  "addr": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+  "code": {
+   "bytes": 1550,
+   "ops": 811,
+   "selectors": 5,
+   "permit": false,
+   "counts": {
+    "JUMPI": 26,
+    "JUMPDEST": 57,
+    "JUMP": 37,
+    "ECADD?": 27,
+    "CALL": 1,
+    "SLOAD": 2,
+    "DELEGATECALL": 1,
+    "SSTORE": 2,
+    "KECCAK": 4
+   }
+  },
+  "src": {
+   "name": "FiatTokenProxy",
+   "compiler": "0.6.12+commit.27d51765",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "upgradeTo",
+    "upgradeToAndCall"
+   ],
+   "writes": [
+    "changeAdmin",
+    "upgradeTo",
+    "upgradeToAndCall"
+   ]
+  },
+  "impl_addr": "0x7458bfdc30034eb860b265e6068121d18fa5aa72",
+  "impl_src": {
+   "name": "FiatTokenV2_1",
+   "compiler": "0.6.12+commit.27d51765",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "blacklist",
+    "burn",
+    "configureMinter",
+    "mint",
+    "pause",
+    "removeMinter",
+    "rescueERC20",
+    "transferOwnership",
+    "unBlacklist",
+    "unpause",
+    "updateBlacklister",
+    "updateMasterMinter",
+    "updatePauser",
+    "updateRescuer"
+   ],
+   "writes": [
+    "approve",
+    "blacklist",
+    "burn",
+    "cancelAuthorization",
+    "configureMinter",
+    "decreaseAllowance",
+    "increaseAllowance",
+    "initialize",
+    "initializeV2",
+    "initializeV2_1",
+    "mint",
+    "pause",
+    "permit",
+    "receiveWithAuthorization",
+    "removeMinter",
+    "rescueERC20",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "transferWithAuthorization",
+    "unBlacklist",
+    "unpause",
+    "updateBlacklister",
+    "updateMasterMinter",
+    "updatePauser",
+    "updateRescuer"
+   ]
+  },
+  "impl_code": {
+   "bytes": 16328,
+   "ops": 10135,
+   "selectors": 50,
+   "permit": true,
+   "counts": {
+    "JUMPI": 218,
+    "JUMPDEST": 331,
+    "JUMP": 179,
+    "ECADD?": 568,
+    "SLOAD": 118,
+    "KECCAK": 97,
+    "SSTORE": 41,
+    "STATICCALL": 1,
+    "CALL": 1
+   }
+  },
+  "proxy_admin": null,
+  "owner_now": "0xbbc9b6001cf0a4fccffab7bdda1ab16cafb9db4f",
+  "total_supply_raw": 4965855610145
+ },
+ {
+  "id": "morpho",
+  "sym": "MORPHO",
+  "fdv": 1765527352,
+  "addr": "0xbaa5cc21fd487b8fcc2f632f3f4e8d37262a0842",
+  "code": {
+   "bytes": 141,
+   "ops": 49,
+   "selectors": 0,
+   "permit": false,
+   "counts": {
+    "SLOAD": 1,
+    "DELEGATECALL": 1,
+    "JUMPI": 1,
+    "JUMPDEST": 1,
+    "KECCAK": 1,
+    "TLOAD": 1
+   }
+  },
+  "src": {
+   "name": "ERC1967Proxy",
+   "compiler": "0.8.27+commit.40a35a09",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [],
+   "writes": []
+  },
+  "impl_addr": "0xa860498f8a299526174b539fcc49f13cc082fb18",
+  "impl_src": {
+   "name": "MorphoTokenOptimism",
+   "compiler": "0.8.27+commit.40a35a09",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "burn",
+    "mint",
+    "renounceOwnership",
+    "transferOwnership",
+    "upgradeToAndCall"
+   ],
+   "writes": [
+    "acceptOwnership",
+    "approve",
+    "burn",
+    "delegate",
+    "delegateWithSig",
+    "initialize",
+    "mint",
+    "permit",
+    "renounceOwnership",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "upgradeToAndCall"
+   ]
+  },
+  "impl_code": {
+   "bytes": 15228,
+   "ops": 4730,
+   "selectors": 33,
+   "permit": true,
+   "counts": {
+    "JUMPI": 231,
+    "JUMPDEST": 305,
+    "ECADD?": 203,
+    "JUMP": 190,
+    "KECCAK": 42,
+    "SLOAD": 61,
+    "SSTORE": 44,
+    "STATICCALL": 2,
+    "DELEGATECALL": 1
+   }
+  },
+  "proxy_admin": null,
+  "owner_now": "0xcba28b38103307ec8da98377fff9816c164f9afa",
+  "total_supply_raw": 25559934431446262363878487
+ },
+ {
+  "id": "aerodrome-finance",
+  "sym": "AERO",
+  "fdv": 892654089,
+  "addr": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+  "code": {
+   "bytes": 4736,
+   "ops": 2736,
+   "selectors": 18,
+   "permit": true,
+   "counts": {
+    "JUMPI": 68,
+    "JUMPDEST": 162,
+    "JUMP": 128,
+    "SLOAD": 22,
+    "ECADD?": 150,
+    "KECCAK": 17,
+    "SSTORE": 7,
+    "STATICCALL": 1
+   }
+  },
+  "src": {
+   "name": "Aero",
+   "compiler": "0.8.19+commit.7dd6d404",
+   "match": "match",
+   "verified": true,
+   "powers": [
+    "mint",
+    "setMinter"
+   ],
+   "writes": [
+    "approve",
+    "decreaseAllowance",
+    "increaseAllowance",
+    "mint",
+    "permit",
+    "setMinter",
+    "transfer",
+    "transferFrom"
+   ]
+  },
+  "owner_now": null,
+  "total_supply_raw": 2008099184240950012933563166
+ },
+ {
+  "id": "virtual-protocol",
+  "sym": "VIRTUAL",
+  "fdv": 444186562,
+  "addr": "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b",
+  "code": {
+   "bytes": 14849,
+   "ops": 9279,
+   "selectors": 54,
+   "permit": false,
+   "counts": {
+    "JUMPI": 278,
+    "JUMPDEST": 603,
+    "JUMP": 416,
+    "ECADD?": 499,
+    "SLOAD": 37,
+    "KECCAK": 29,
+    "SSTORE": 16,
+    "CALL": 5,
+    "STATICCALL": 4,
+    "CALLCODE": 1
+   }
+  },
+  "src": {
+   "name": "OptimismMintableERC20",
+   "compiler": "0.8.20+commit.a1b79de6",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "burn",
+    "mint",
+    "renounceOwnership",
+    "transferOwnership"
+   ],
+   "writes": [
+    "approve",
+    "burn",
+    "decreaseAllowance",
+    "increaseAllowance",
+    "lzReceive",
+    "lzReceiveAndRevert",
+    "lzReceiveSimulate",
+    "mint",
+    "renounceOwnership",
+    "send",
+    "setDelegate",
+    "setEnforcedOptions",
+    "setMsgInspector",
+    "setPeer",
+    "setPreCrime",
+    "transfer",
+    "transferFrom",
+    "transferOwnership"
+   ]
+  },
+  "owner_now": "0x0000000000000000000000000000000000000000",
+  "total_supply_raw": 497980297287682527970503232
+ },
+ {
+  "id": "kaito",
+  "sym": "KAITO",
+  "fdv": 178996954,
+  "addr": "0x98d0baa52b2d063e780de12f615f963fe8537553",
+  "code": {
+   "bytes": 5494,
+   "ops": 2615,
+   "selectors": 16,
+   "permit": true,
+   "counts": {
+    "JUMPI": 66,
+    "JUMPDEST": 153,
+    "JUMP": 119,
+    "ECADD?": 150,
+    "SLOAD": 21,
+    "KECCAK": 24,
+    "SSTORE": 6,
+    "STATICCALL": 1,
+    "CALL": 1,
+    "CREATE2": 1
+   }
+  },
+  "src": {
+   "name": "Kaito",
+   "compiler": "0.8.26+commit.8a97fa7a",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "burn"
+   ],
+   "writes": [
+    "approve",
+    "burn",
+    "decreaseAllowance",
+    "increaseAllowance",
+    "permit",
+    "transfer",
+    "transferFrom"
+   ]
+  },
+  "owner_now": null,
+  "total_supply_raw": 1000000000000000000000000000
+ },
+ {
+  "id": "zora",
+  "sym": "ZORA",
+  "fdv": 45772917,
+  "addr": "0x1111111111166b7fe7bd91427724b487980afc69",
+  "code": {
+   "bytes": 12018,
+   "ops": 4878,
+   "selectors": 25,
+   "permit": true,
+   "counts": {
+    "JUMPI": 204,
+    "JUMPDEST": 401,
+    "JUMP": 312,
+    "ECADD?": 173,
+    "SLOAD": 47,
+    "KECCAK": 43,
+    "SSTORE": 20,
+    "STATICCALL": 1
+   }
+  },
+  "src": {
+   "name": "Zora",
+   "compiler": "0.8.28+commit.7893614a",
+   "match": "match",
+   "verified": true,
+   "powers": [],
+   "writes": [
+    "approve",
+    "delegate",
+    "delegateBySig",
+    "initialize",
+    "permit",
+    "transfer",
+    "transferFrom"
+   ]
+  },
+  "owner_now": null,
+  "total_supply_raw": 10000000000000000000000000000
+ },
+ {
+  "id": "toshi",
+  "sym": "TOSHI",
+  "fdv": 33838648,
+  "addr": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+  "code": {
+   "bytes": 11948,
+   "ops": 7152,
+   "selectors": 45,
+   "permit": false,
+   "counts": {
+    "JUMPI": 218,
+    "JUMPDEST": 440,
+    "JUMP": 310,
+    "ECADD?": 268,
+    "SLOAD": 117,
+    "KECCAK": 38,
+    "SSTORE": 41,
+    "STATICCALL": 5,
+    "CALL": 9
+   }
+  },
+  "src": {
+   "name": "ToshiToken",
+   "compiler": "0.8.17+commit.8df45f5f",
+   "match": "match",
+   "verified": true,
+   "powers": [
+    "burn",
+    "renounceOwnership",
+    "transferOwnership"
+   ],
+   "writes": [
+    "approve",
+    "bulkExcludeFromFees",
+    "bulkExcludeFromMaxTransaction",
+    "burn",
+    "decreaseAllowance",
+    "excludeFromFees",
+    "excludeFromMaxTransaction",
+    "faceOfBase",
+    "increaseAllowance",
+    "meow",
+    "renounceOwnership",
+    "setBuyFees",
+    "setDevelopmentWallet",
+    "setLiquidityWallet",
+    "setMarketingWallet",
+    "setMaxWalletAndMaxTransaction",
+    "setSellFees",
+    "setSwapEnabled",
+    "setSwapTokensAtAmount",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "withdrawStuckTokens"
+   ]
+  },
+  "owner_now": "0x0000000000000000000000000000000000000000",
+  "total_supply_raw": 420689980957167224795424422478
+ },
+ {
+  "id": "degen-base",
+  "sym": "DEGEN",
+  "fdv": 24650707,
+  "addr": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+  "code": {
+   "bytes": 11608,
+   "ops": 5382,
+   "selectors": 38,
+   "permit": true,
+   "counts": {
+    "JUMPI": 162,
+    "JUMPDEST": 383,
+    "JUMP": 301,
+    "ECADD?": 222,
+    "SLOAD": 51,
+    "KECCAK": 37,
+    "SSTORE": 17,
+    "STATICCALL": 1,
+    "CREATE": 1,
+    "CREATE2": 1
+   }
+  },
+  "src": {
+   "name": "DegenToken",
+   "compiler": "0.8.20+commit.a1b79de6",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "burn",
+    "burnFrom",
+    "mint",
+    "pause",
+    "renounceOwnership",
+    "transferOwnership",
+    "unpause"
+   ],
+   "writes": [
+    "approve",
+    "burn",
+    "burnFrom",
+    "delegate",
+    "delegateBySig",
+    "mint",
+    "pause",
+    "permit",
+    "renounceOwnership",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "unpause"
+   ]
+  },
+  "owner_now": "0x704ec5c12ca20a293c2c0b72b22619a4231f3c0d",
+  "total_supply_raw": 35835495265806580408493557688
+ },
+ {
+  "id": "aixbt",
+  "sym": "AIXBT",
+  "fdv": 13098182,
+  "addr": "0x4f9fd6be4a90f2620860d680c0d4d5fb53d1a825",
+  "code": {
+   "bytes": 45,
+   "ops": 24,
+   "selectors": 0,
+   "permit": false,
+   "counts": {
+    "DELEGATECALL": 1,
+    "JUMPI": 1,
+    "JUMPDEST": 1
+   }
+  },
+  "src": {
+   "err": "not on Sourcify: <HTTPError 404: 'Not Found'>"
+  },
+  "clone": "EIP-1167",
+  "impl_addr": "0x082cb6e892dd0699b5f0d22f7d2e638bbada5d94",
+  "impl_src": {
+   "name": "AgentToken",
+   "compiler": "0.8.20+commit.a1b79de6",
+   "match": "exact_match",
+   "verified": true,
+   "powers": [
+    "burn",
+    "burnFrom",
+    "renounceOwnership",
+    "transferOwnership"
+   ],
+   "writes": [
+    "acceptOwnership",
+    "addInitialLiquidity",
+    "addLiquidityPool",
+    "addValidCaller",
+    "approve",
+    "burn",
+    "burnFrom",
+    "decreaseAllowance",
+    "distributeTaxTokens",
+    "increaseAllowance",
+    "initialize",
+    "removeLiquidityPool",
+    "removeValidCaller",
+    "renounceOwnership",
+    "setProjectTaxRates",
+    "setProjectTaxRecipient",
+    "setSwapThresholdBasisPoints",
+    "transfer",
+    "transferFrom",
+    "transferOwnership",
+    "withdrawERC20",
+    "withdrawETH"
+   ]
+  },
+  "impl_code": {
+   "bytes": 12674,
+   "ops": 8430,
+   "selectors": 46,
+   "permit": false,
+   "counts": {
+    "JUMPI": 269,
+    "JUMPDEST": 527,
+    "SLOAD": 119,
+    "ECADD?": 286,
+    "JUMP": 332,
+    "KECCAK": 31,
+    "SSTORE": 49,
+    "CALL": 8,
+    "STATICCALL": 2,
+    "CALLCODE": 1,
+    "CREATE2": 2
+   }
+  },
+  "proxy_admin": null,
+  "owner_now": "0xe220329659d41b2a9f26e83816b424bdacf62567",
+  "total_supply_raw": 998914867384139147138361299
+ }
+]
