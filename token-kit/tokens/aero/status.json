@@ -13,14 +13,23 @@
  },
  "port": "Ported from tokens/usde (same solc 0.8.19 / paris / OpenZeppelin ERC20Permit + minter). Changes: storage slots (balances 0, allowances 1, totalSupply 2, nonces 7, minter 9), no Ownable2Step (owner/pendingOwner/transferOwnership/acceptOwnership/renounceOwnership removed), no burn/burnFrom, setMinter gated by the minter (not an owner) and emits no event, mint returns true, chain id 8453 and the AERO address in the cached domain branch, a new real permit signature (private key 0x11..11) for the AERO domain.",
  "build": {
-  "status": "pending: first CI build on GitHub Actions (.github/workflows/lean-build.yml)"
+  "status": "pass",
+  "where": "GitHub Actions run 44089374857 (NurstarK/proven-tokens, branch base-tokens)",
+  "final_line": "Build completed successfully (1424 jobs).",
+  "exit_code": 0
  },
  "assumptions": [
-  "KeyFacts (Instance.lean): 5 named keccak facts",
+  "KeyFacts (Instance.lean): 5 named keccak facts (USDE had 7: the two ownership slots are gone)",
   "fork range Paris <= fork < Glamsterdam (Ethereum fork model; Base is OP-stack: identical opcode semantics for this bytecode, but the fork mapping is an assumption)"
  ],
  "not_covered": [
   "who holds the minter role today (read on chain 2026-11-17: 0xeb018363f0a9af8f91f06fee6613a751b2a33fe5, a contract)",
   "constructor"
- ]
+ ],
+ "axioms_test": {
+  "theorems": 354,
+  "count_matches_Test/Axioms.lean": true,
+  "only_standard_axioms": true,
+  "constants_scanned": 11831
+ }
 }
