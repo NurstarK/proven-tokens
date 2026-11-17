@@ -350,7 +350,7 @@ theorem permit_runs (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)
   have hct : (m1 b t).currentTarget = AERO := rfl
   have hcw : (m1 b t).currentTarget.toU256 = (844964229918373383519429909057608248401849845297 : U256) :=
     aero_toU256
-  have hch : (m1 b t).blockEnv.chainId.toNat = 1 := rfl
+  have hch : (m1 b t).blockEnv.chainId.toNat = 8453 := rfl
   have hts : (m1 b t).blockEnv.timestamp = 0 := rfl
   have hacc : hasAccount (sState AERO []) AERO := hasAccount_sState AERO _
   have wc : ∀ o c n cold, Gas.writeCost fork o c n cold ≤ 22100 := fun o c n cold =>
